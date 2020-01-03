@@ -1,0 +1,92 @@
+body {
+    --pale-red: #e5938b;
+    --pale-green: #8be593;
+    --pale-blue: #8bdee5;
+        
+    --dark-red: #845656;
+    --dark-green: #568456;
+    --dark-blue: #565684;
+
+    --primary: #79d261;
+
+    --receive-color: #358820;
+    --send-color: #f9a974;
+    --echo-color: #ef6f7e;
+    background-color: #f8f8f8;
+    font-family: sans-serif;
+}
+
+.RECV {
+    color: var(--receive-color);
+}
+
+.SEND {
+    color: var(--send-color);
+}
+
+.ECHO {
+    color: var(--echo-color);
+}
+
+.ConsoleContainer {
+    height: 256px;
+    background-color: white;
+    padding: 16px;
+    margin: 8px;
+    overflow-x: auto;
+    overflow-y: scroll;
+    border: 4px solid var(--primary);
+    border-radius: 4px;
+}
+
+.ConsoleText {
+    font-family: monospace;
+    padding: 4px;
+}
+
+.ConsoleControl {
+    margin-left: 16px;
+    margin-right: 16px;
+    width: auto;
+}
+
+.ConsoleScrolling {
+    float: right;
+}
+
+input[type="checkbox"] {
+    display: inline;
+    background-color: red;
+}
+
+label {
+    padding: 0;
+    color: #909090;
+    font-size: 10pt;
+}
+
+.button {
+    color: white;
+    background-color: var(--primary);
+    border: none;
+    text-align: center;
+    padding: 8px 16px;
+}
+
+.SerialSender {
+    padding: 4px;
+}
+
+.SerialSenderElement {
+    margin-right: 8px;
+    padding: 2px;
+}
+
+.SerialSenderBox {
+    display: inline-block;
+    background-color: white;
+    padding: 16px;
+    margin: 8px;
+    border: 4px solid var(--primary);
+    border-radius: 4px;
+}

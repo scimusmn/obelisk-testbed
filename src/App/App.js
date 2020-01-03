@@ -1,21 +1,94 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Container } from 'reactstrap';
-import AppRoutes from './AppRoutes';
+import propTypes from 'prop-types';
+import Console from '../Console/Console';
+import SerialSendBox from '../SerialSender/SerialSendBox';
+import { ARDUINO_READY, WAKE_ARDUINO } from '../Serial/arduinoConstants';
+import withSerialCommunication from '../Serial/SerialHOC';
 
-//
-// Serve the app from a subdirectory in production if needed.
-//
-const basename = process.env.NODE_ENV === 'development' ? '/' : '/';
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      handshake: false,
+    };
 
-const App = () => (
-  <BrowserRouter basename={basename}>
-    <div className="base-container">
-      <Container fluid>
-        <AppRoutes />
-      </Container>
-    </div>
-  </BrowserRouter>
-);
+    this.console = null;
 
-export default App;
+    this.checkHandshake = this.checkHandshake.bind(this);
+    this.onSerialData = this.onSerialData.bind(this);
+    this.updateHandshake = this.updateHandshake.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  componentDidMount() {
+    const { setOnDataCallback } = this.props;
+    setOnDataCallback(this.onSerialData);
+    document.addEventListener('keydown', this.handleReset);
+    this.checkHandshake();
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  onSerialData(data) {
+    const { handshake } = this.state;
+
+    if (data.message === ARDUINO_READY.message && !handshake) {
+      this.updateHandshake();
+    }
+
+    const dataString = JSON.stringify(data);
+    this.console.recv(dataString);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  checkHandshake() {
+    const { sendData } = this.props;
+
+    sendData(JSON.stringify(WAKE_ARDUINO));
+
+    setTimeout(() => {
+      this.checkHandshake();
+    }, 5000);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  updateHandshake() {
+    this.setState({
+      handshake: true,
+    });
+    this.console.echo('handshake with arduino!');
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  sendMessage(message) {
+    const { sendData } = this.props;
+    sendData(message);
+    this.console.send(message);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  render() {
+    return (
+      <div>
+        <SerialSendBox sendData={this.sendMessage} />
+        <Console ref={(element) => { this.console = element; }} />
+      </div>
+    );
+  }
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+App.propTypes = {
+  sendData: propTypes.func.isRequired,
+  setOnDataCallback: propTypes.func.isRequired,
+};
+
+const AppWithSerialCommunication = withSerialCommunication(App);
+export default AppWithSerialCommunication;
