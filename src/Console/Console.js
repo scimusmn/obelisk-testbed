@@ -20,6 +20,7 @@ class Console extends React.Component {
     this.state = {
       lines: [],
       scrolling: true,
+      consoleActive: true,
       filterState: filterOptions[0],
       filters: [],
       activeFilters: [],
@@ -28,6 +29,7 @@ class Console extends React.Component {
     this.consoleEnd = null;
     this.scrollToEnd = this.scrollToEnd.bind(this);
     this.toggleScrolling = this.toggleScrolling.bind(this);
+    this.toggleConsoleActive = this.toggleConsoleActive.bind(this);
     this.setFilterState = this.setFilterState.bind(this);
     this.setActiveFilters = this.setActiveFilters.bind(this);
     this.clear = this.clear.bind(this);
@@ -65,6 +67,13 @@ class Console extends React.Component {
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  toggleConsoleActive() {
+    const { consoleActive } = this.state;
+    this.setState({ consoleActive: !consoleActive });
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   scrollToEnd() {
     if (this.consoleEnd) {
       this.consoleEnd.scrollIntoView({ behavior: 'smooth' });
@@ -74,7 +83,8 @@ class Console extends React.Component {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   put(message, key, type) {
-    if (type === 'ECHO' || type === 'SEND' || type === 'RECV') {
+    const { consoleActive } = this.state;
+    if (consoleActive && (type === 'ECHO' || type === 'SEND' || type === 'RECV')) {
       const { lines, scrolling, filters } = this.state;
       const newLine = {
         line: (
@@ -140,7 +150,7 @@ class Console extends React.Component {
 
   render() {
     const {
-      lines, scrolling, filterState, filters, activeFilters,
+      lines, scrolling, consoleActive, filterState, filters, activeFilters,
     } = this.state;
     const filteredLines = lines.filter((lineObject) => {
       if (filterState.value === 'off') {
@@ -184,10 +194,17 @@ class Console extends React.Component {
             options={filtersToShow}
             onChange={this.setActiveFilters}
           />
-          <label className="ConsoleScrolling" htmlFor="Scroll to new messages">
-            <input type="checkbox" checked={scrolling} onChange={this.toggleScrolling} />
-            Scroll to new messages
-          </label>
+          <div className="ConsoleScrolling">
+            <label htmlFor="Console active">
+              <input type="checkbox" checked={consoleActive} onChange={this.toggleConsoleActive} />
+              Console active
+            </label>
+            <br />
+            <label htmlFor="Scroll to new messages">
+              <input type="checkbox" checked={scrolling} onChange={this.toggleScrolling} />
+              Scroll to new messages
+            </label>
+          </div>
         </div>
       </div>
     );
