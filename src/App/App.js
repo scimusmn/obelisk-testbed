@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     const dataString = JSON.stringify(data);
-    this.console.recv(dataString);
+    this.console.recv(dataString, data.message);
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
