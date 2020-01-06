@@ -48,8 +48,12 @@ class Console extends React.Component {
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   setActiveFilters(filterArray) {
-    const activeFilters = filterArray.map((f) => f.value);
-    this.setState({ activeFilters });
+    if (filterArray === null) {
+      this.setState({ activeFilters: [] });
+    } else {
+      const activeFilters = filterArray.map((f) => f.value);
+      this.setState({ activeFilters });
+    }
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
