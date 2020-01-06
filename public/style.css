@@ -7,7 +7,7 @@ body {
     --dark-green: #568456;
     --dark-blue: #565684;
 
-    --primary: #79d261;
+    --primary: #3399ff;
 
     --receive-color: #358820;
     --send-color: #f9a974;
@@ -35,7 +35,7 @@ body {
     margin: 8px;
     overflow-x: auto;
     overflow-y: scroll;
-    border: 4px solid var(--primary);
+    border: 2px solid var(--primary);
     border-radius: 4px;
 }
 
@@ -83,6 +83,7 @@ label {
     border: none;
     text-align: center;
     padding: 8px 16px;
+    border-radius: 4px;
 }
 
 .SerialSender {
@@ -99,6 +100,6 @@ label {
     background-color: white;
     padding: 16px;
     margin: 8px;
-    border: 4px solid var(--primary);
+    border: 2px solid var(--primary);
     border-radius: 4px;
 }
