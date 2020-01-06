@@ -30,7 +30,7 @@ class Console extends React.Component {
   }
 
   put(message, type) {
-    if (false) { // type === 'ECHO' || type === 'SEND' || type === 'RECV') {
+    if (type === 'ECHO' || type === 'SEND' || type === 'RECV') {
       const { lines, scrolling } = this.state;
       this.setState({
         lines: lines.concat([

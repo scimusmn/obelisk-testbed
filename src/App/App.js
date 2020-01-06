@@ -1,3 +1,5 @@
+/* eslint import/no-named-as-default: 0 */
+/* eslint import/no-named-as-default-member: 0 */
 import React from 'react';
 import propTypes from 'prop-types';
 import Console from '../Console/Console';
