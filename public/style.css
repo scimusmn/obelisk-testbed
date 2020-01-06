@@ -50,6 +50,18 @@ body {
     width: auto;
 }
 
+.ConsoleFilteringState {
+    margin-left: 4px;
+    display: inline-block;
+    width: 200px;
+}
+
+.ConsoleFilteringSelection {
+    margin-left: 4px;
+    display: inline-block;
+    width: 500px;
+}
+
 .ConsoleScrolling {
     float: right;
 }
