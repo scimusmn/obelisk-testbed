@@ -67,10 +67,10 @@ class App extends React.Component {
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  sendMessage(message) {
+  sendMessage(message, key) {
     const { sendData } = this.props;
     sendData(message);
-    this.console.send(message);
+    this.console.send(message, key);
   }
 
   // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

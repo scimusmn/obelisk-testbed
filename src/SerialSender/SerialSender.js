@@ -39,6 +39,7 @@ class SerialSender extends React.Component {
         message: m,
         value: v,
       }),
+      m,
     );
   }
 
